@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THYSS - Crypto-native Payment SaaS</title>
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000; /* Чёрный фон */
+            color: #fff;
+            font-family: 'Inter', 'system-ui', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Стиль для видео (фон) */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Растягиваем видео, сохраняя соотношение сторон */
+            z-index: -1; /* Поверх фона, но под всем остальным контентом */
+            pointer-events: none; /* Позволяет кликать сквозь видео */
+        }
+
+        /* Стиль для информационной панели слева вверху */
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: 'Inter', 'system-ui', sans-serif;
+            font-size: 14px;
+            z-index: 10; /* Поверх видео */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .info-panel a {
+            color: #00ff9d; /* Ярко-зелёный цвет ссылки */
+            text-decoration: none;
+        }
+
+        .info-panel a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Фоновое видео -->
+    <video class="background-video" autoplay muted loop playsinline>
+        <source src="videos/222.mp4" type="video/mp4">
+        Ваш браузер не поддерживает тег video.
+    </video>
+
+    <!-- Информационная панель слева вверху -->
+    <div class="info-panel">
+        <div>THYSS - Crypto-native Payment SaaS</div>
+        <!-- Исправленная ссылка на дашборд -->
+        <div><a href="http://localhost:3001">Dashboard</a> | <a href="/docs">Docs</a></div>
+    </div>
+</body>
+</html>

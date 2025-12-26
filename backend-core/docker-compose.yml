@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # --- DB (Локальная база) ---
+  db:
+    image: postgres:16
+    container_name: thyss_db
+    environment:
+      POSTGRES_DB: thyss
+      POSTGRES_USER: thyss_user
+      POSTGRES_PASSWORD: secure_pass
+    volumes:
+      - thyss_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thyss_user -d thyss"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Redis ---
+  redis:
+    image: redis:7-alpine
+    container_name: thyss_redis
+    command: redis-server --save 60 1 --loglevel warning
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # --- WORKER 1: Listener ---
+  ton-listener:
+    build: .
+    container_name: thyss_listener
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: "https://sblgbxhdirjunggpkdfs.supabase.co"
+      # ВСТАВИЛ ТВОЙ РЕАЛЬНЫЙ КЛЮЧ ИЗ ПЕРВОГО ФАЙЛА
+      SUPABASE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNibGdieGhkaXJqdW5nZ3BrZGZzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI4Njk4MSwiZXhwIjoyMDgwODYyOTgxfQ.2MYHwQ-6O2W7MijDyTAvSUnNslQkpLryO3DxTF_4fh8"
+      TON_ENDPOINT: "https://toncenter.com/api/v2/jsonRPC"
+      TON_API_KEY: "" 
+      USDT_MASTER_ADDRESS: "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"
+    command: npm run start:listener
+
+  # --- WORKER 2: Sweeper ---
+  sweeper:
+    build: .
+    container_name: thyss_sweeper
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: "https://sblgbxhdirjunggpkdfs.supabase.co"
+      # ВСТАВИЛ ТВОЙ РЕАЛЬНЫЙ КЛЮЧ
+      SUPABASE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNibGdieGhkaXJqdW5nZ3BrZGZzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI4Njk4MSwiZXhwIjoyMDgwODYyOTgxfQ.2MYHwQ-6O2W7MijDyTAvSUnNslQkpLryO3DxTF_4fh8"
+      TON_ENDPOINT: "https://toncenter.com/api/v2/jsonRPC"
+      TON_API_KEY: "" 
+      USDT_MASTER_ADDRESS: "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"
+      # ⚠️ ВАЖНО: СЮДА ВСТАВЬ СВОИ 24 СЛОВА ВМЕСТО ЭТОГО ТЕКСТА 👇
+      MASTER_MNEMONIC: "ketchup rack gauge sock away viable thrive chronic tragic twelve alley bird venture ostrich defense input large twice quantum spirit ostrich hollow swallow slice"
+    command: npm run start:sweeper
+
+  # --- WORKER 3: Webhook Sender ---
+  webhook-sender:
+    build: .
+    container_name: thyss_webhook
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: "https://sblgbxhdirjunggpkdfs.supabase.co"
+      # ВСТАВИЛ ТВОЙ РЕАЛЬНЫЙ КЛЮЧ
+      SUPABASE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNibGdieGhkaXJqdW5nZ3BrZGZzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI4Njk4MSwiZXhwIjoyMDgwODYyOTgxfQ.2MYHwQ-6O2W7MijDyTAvSUnNslQkpLryO3DxTF_4fh8"
+    command: npm run start:webhook
+
+volumes:
+  thyss_pg_data:

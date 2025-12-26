@@ -1,0 +1,40 @@
+<!-- test-widget.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPA3007 Widget Test</title>
+    <link rel="stylesheet" href="widget.css">
+    <!-- Подключаем библиотеку для генерации QR-кода -->
+    <script src="https://unpkg.com/qrcode@latest/build/qrcode.min.js"></script>
+</head>
+<body style="background-color: #f0f0f0; padding: 20px; font-family: sans-serif;">
+    <h1>TPA3007 Widget Test Page</h1>
+    <p>Below is the payment widget.</p>
+
+    <!-- Контейнер для виджета -->
+    <div id="tpa3007-widget-container"></div>
+
+    <!-- Скрипт виджета -->
+    <script src="widget.js"></script>
+
+    <script>
+        // Инициализация виджета при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // ВАЖНО: Замените 'tpa3007' на ТОТ КЛЮЧ, bcrypt-хеш которого вы сохранили в БД
+            // Используйте реальный order_id и amount_usdt
+            TPA3007Widget.init({
+                apiKey: 'tpa3007', // <-- ЗАМЕНИТЬ НА РЕАЛЬНЫЙ КЛЮЧ
+                orderId: 'ORD-TEST-WIDGET-' + Date.now(), // Уникальный ID заказа для теста
+                amountUsdt: 10, // Сумма для теста
+                containerId: 'tpa3007-widget-container', // ID контейнера (опционально, если есть)
+                apiUrl: 'http://localhost:3000', // Убедитесь, что сервер запущен на этом адресе
+                pollInterval: 5000, // Интервал опроса статуса в миллисекундах (5 секунд)
+                // onTimerExpired: function() { console.log('Timer expired callback'); } // Callback при истечении
+            });
+        });
+    </script>
+</body>
+</html>

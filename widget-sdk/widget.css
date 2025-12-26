@@ -1,0 +1,105 @@
+/* widget.css */
+
+/* Общие стили для виджета */
+.tpa3007-widget {
+  font-family: 'Neue Haas Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #fdfdfd; /* Белёсенький фон */
+  border: 1px solid #e0e0e0; /* Тонкая рамка */
+  border-radius: 8px; /* Лёгкие скругления */
+  padding: 24px;
+  max-width: 300px; /* Максимальная ширина */
+  margin: 0 auto; /* Центрирование */
+  box-sizing: border-box;
+  /* Псевдо-асимметрия: смещение содержимого */
+  /* transform: translateX(5%); /* Пример смещения, можно регулировать */
+  /* transition: all 0.2s ease; /* Плавность */
+}
+
+/* Стили для суммы */
+.tpa3007-amount {
+  font-size: 28px;
+  font-weight: 300; /* Лёгкий вес */
+  color: #000;
+  margin-bottom: 16px;
+  text-align: center; /* Центрируем сумму */
+}
+
+/* Стили для QR-кода */
+.tpa3007-qr-container {
+  /* Асимметричное позиционирование */
+  /* Вариант 1: Смещение влево */
+  margin-left: -20px; /* Смещаем контейнер */
+  margin-right: auto; /* Выравнивание по левому краю */
+  /* Вариант 2: Смещение вправо */
+  /* margin-left: auto; */
+  /* margin-right: -20px; */
+  width: 220px; /* Фиксированная ширина */
+  height: 220px; /* Квадрат */
+  margin-bottom: 16px;
+  /* border: 1px dashed #ccc; /* Для визуализации */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tpa3007-qr-code {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid #ddd; /* Внутренняя рамка QR */
+}
+
+/* Стили для таймера и инструкции */
+.tpa3007-timer,
+.tpa3007-instruction {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.tpa3007-timer.expired {
+  color: #d32f2f; /* Красный цвет при истечении */
+}
+
+/* Состояния загрузки/ошибки */
+.tpa3007-loading,
+.tpa3007-error {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  padding: 20px 0;
+}
+
+.tpa3007-error {
+  color: #d32f2f; /* Красный для ошибки */
+}
+
+/* Состояние "Оплачено" */
+.tpa3007-paid {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #388e3c; /* Зелёный для успеха */
+  padding: 20px 0;
+}
+
+/* Состояние "Просрочено" */
+.tpa3007-expired {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #d32f2f; /* Красный для просрочки */
+  padding: 20px 0;
+}
+
+/* Стили для деталей инвойса (показываются после оплаты/просрочки) */
+.tpa3007-invoice-details {
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.tpa3007-invoice-details p {
+  margin: 5px 0;
+}

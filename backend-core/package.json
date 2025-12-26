@@ -1,0 +1,24 @@
+{
+  "name": "thyss-backend-workers",
+  "version": "2.0.0",
+  "description": "Background workers for THYSS payment system",
+  "main": "ton-listener.js",
+  "scripts": {
+    "start:listener": "node ton-listener.js",
+    "start:sweeper": "node sweeper.js",
+    "start:webhook": "node webhook-sender.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.87.1",
+    "@ton/core": "^0.62.0",
+    "@ton/crypto": "^3.3.0",
+    "@ton/ton": "^13.11.2",
+    "axios": "^1.6.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^17.2.3",
+    "pg": "^8.11.3",
+    "qrcode": "^1.5.3",
+    "redis": "^4.6.14",
+    "uuid": "^10.0.0"
+  }
+}
